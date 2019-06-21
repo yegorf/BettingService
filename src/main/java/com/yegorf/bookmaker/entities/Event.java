@@ -14,6 +14,5 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-
-
+    private String name;
 }

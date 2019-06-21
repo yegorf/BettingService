@@ -19,7 +19,7 @@
         },
 
         async created() {
-            let kek = await axios.get('/users/getUsers');
+            let kek = await axios.get('/events/getEvents');
             this.events = kek.data;
             console.log(this.events);
         }
