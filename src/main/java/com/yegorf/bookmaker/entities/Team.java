@@ -14,6 +14,11 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    public Team(String name, String info) {
+        this.name = name;
+        this.info = info;
+    }
+
     private String name;
     private String info;
 }

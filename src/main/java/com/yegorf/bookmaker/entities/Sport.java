@@ -1,6 +1,8 @@
 package com.yegorf.bookmaker.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,4 +17,8 @@ public class Sport {
     private Integer id;
 
     private String sport;
+
+    public Sport(String sport) {
+        this.sport = sport;
+    }
 }

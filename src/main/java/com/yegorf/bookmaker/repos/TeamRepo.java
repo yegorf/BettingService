@@ -4,6 +4,9 @@ import com.yegorf.bookmaker.entities.Team;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
+
 @Repository
 public interface TeamRepo extends CrudRepository<Team, Integer> {
+    HashSet<Team> findAll();
 }
