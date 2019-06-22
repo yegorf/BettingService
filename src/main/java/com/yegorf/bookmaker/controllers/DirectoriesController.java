@@ -1,9 +1,12 @@
 package com.yegorf.bookmaker.controllers;
 
+import com.yegorf.bookmaker.entities.Bet;
 import com.yegorf.bookmaker.entities.Sport;
 import com.yegorf.bookmaker.entities.Team;
+import com.yegorf.bookmaker.repos.BetRepo;
 import com.yegorf.bookmaker.repos.SportRepo;
 import com.yegorf.bookmaker.repos.TeamRepo;
+import com.yegorf.bookmaker.repos.UserRepo;
 import com.yegorf.bookmaker.validators.DirectoriesValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,7 @@ public class DirectoriesController {
     private SportRepo sportRepo;
     @Autowired
     private TeamRepo teamRepo;
+
 
     private DirectoriesValidator directoriesValidator = new DirectoriesValidator(sportRepo, teamRepo);
 

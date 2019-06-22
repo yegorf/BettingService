@@ -1,5 +1,6 @@
 package com.yegorf.bookmaker.repos;
 
+import com.yegorf.bookmaker.entities.Bet;
 import com.yegorf.bookmaker.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

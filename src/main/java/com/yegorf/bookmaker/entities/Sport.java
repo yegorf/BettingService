@@ -2,6 +2,7 @@ package com.yegorf.bookmaker.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Sport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
