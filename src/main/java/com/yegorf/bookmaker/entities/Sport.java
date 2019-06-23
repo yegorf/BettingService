@@ -1,24 +1,25 @@
 package com.yegorf.bookmaker.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
+@ToString(exclude = "events")
+@JsonIgnoreProperties("events")
 public class Sport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String sport;
+
+    @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL)
+    private Set<Event> events;
 
     public Sport(String sport) {
         this.sport = sport;

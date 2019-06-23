@@ -22,8 +22,6 @@ public class DirectoriesController {
     private TeamRepo teamRepo;
 
 
-    private DirectoriesValidator directoriesValidator = new DirectoriesValidator(sportRepo, teamRepo);
-
     @GetMapping("/getTeams")
     public HashSet<Team> getTeams() {
         return teamRepo.findAll();
@@ -32,7 +30,7 @@ public class DirectoriesController {
     @PostMapping("/addTeam")
     public String addTeam(@RequestParam String team, @RequestParam String info) {
         try {
-            directoriesValidator.checkTeamUniq(team);
+            new DirectoriesValidator(sportRepo, teamRepo).checkTeamUniq(team);
         }catch (Exception e) {
             return e.getMessage();
         }
@@ -48,8 +46,9 @@ public class DirectoriesController {
     @PostMapping("/addSport")
     public String addSport(@RequestParam String sport) {
         try {
-            directoriesValidator.checkSportUniq(sport);
+            new DirectoriesValidator(sportRepo, teamRepo).checkSportUniq(sport);
         }catch (Exception e) {
+            System.out.println(e.getMessage());
             return e.getMessage();
         }
         sportRepo.save(new Sport(sport));

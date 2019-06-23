@@ -10,24 +10,5 @@ import java.util.ArrayList;
 
 @RestController("/main")
 public class MainController {
-    @Autowired
-    private UserRepo userRepo;
 
-//    @GetMapping("/getUsers")
-//    public ArrayList getUsers() {
-//        ArrayList<User> users = (ArrayList<User>) userRepo.findAll();
-//        for(User user : users) {
-//            System.out.println(user.getId() + user.getEmail());
-//        }
-//        return users;
-//    }
-
-//    @GetMapping
-//    public ArrayList getUser() {
-//        ArrayList<User> users = (ArrayList<User>) userRepo.findAll();
-//        for(User user : users) {
-//            System.out.println(user.getId() + user.getEmail());
-//        }
-//        return users;
-//    }
 }
