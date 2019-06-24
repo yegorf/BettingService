@@ -4,7 +4,7 @@ import com.yegorf.bookmaker.entities.Event;
 import com.yegorf.bookmaker.entities.Part;
 import com.yegorf.bookmaker.entities.Sport;
 import com.yegorf.bookmaker.entities.Team;
-import com.yegorf.bookmaker.json_entities.JsonEvent;
+import com.yegorf.bookmaker.dto.JsonEvent;
 import com.yegorf.bookmaker.repos.EventRepo;
 import com.yegorf.bookmaker.repos.PartRepo;
 import com.yegorf.bookmaker.repos.SportRepo;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 @RestController
 @RequestMapping("/events")

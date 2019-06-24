@@ -11,12 +11,13 @@ public class Bet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-//    private Integer user_id;
-//    private Integer event_id;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "event_result_id")
+    private EventResult eventResult;
 
     private Float sum;
     private Float coef;

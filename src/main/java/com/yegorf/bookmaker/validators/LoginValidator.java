@@ -8,14 +8,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginValidator {
     private final UserRepo userRepo;
+    private User user;
 
     public LoginValidator(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
-    public void validate(String username, String password) throws Exception {
+    public User validate(String username, String password) throws Exception {
         checkUsername(username);
         checkPassword(password);
+        return user;
     }
 
     private void checkUsername(String username) throws Exception {
@@ -24,6 +26,7 @@ public class LoginValidator {
         for(User user : userRepo.findAll()) {
             if(username.equals(user.getName())) {
                 usernameCheck = true;
+                this.user = user;
                 break;
             }
         }
@@ -38,6 +41,7 @@ public class LoginValidator {
             for(User user : userRepo.findAll()) {
                 if(password.equals(user.getPassword())) {
                     passwordCheck = true;
+                    this.user = user;
                     break;
                 }
             }

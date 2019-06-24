@@ -1,9 +1,8 @@
 package com.yegorf.bookmaker.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,6 +11,7 @@ import java.util.Set;
 @EqualsAndHashCode(of="id")
 @Entity
 @NoArgsConstructor
+@JsonIgnoreProperties("bets")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,6 +20,8 @@ public class User {
     private String name;
     private String password;
     private String email;
+    private Integer admin = 0;
+    private Float balance;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Bet> bets;
@@ -28,10 +30,5 @@ public class User {
         this.name = name;
         this.password = password;
         this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return id + " ";
     }
 }

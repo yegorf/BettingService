@@ -1,4 +1,4 @@
-package com.yegorf.bookmaker.json_entities;
+package com.yegorf.bookmaker.dto;
 
 import lombok.Data;
 

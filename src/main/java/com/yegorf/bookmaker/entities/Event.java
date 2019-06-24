@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @EqualsAndHashCode(of="id")
 @ToString(exclude = "parts")
-@JsonIgnoreProperties("parts")
+@JsonIgnoreProperties({"parts", "results"})
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +21,8 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private Set<Part> parts;
 
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private Set<EventResult> results;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sport_id")

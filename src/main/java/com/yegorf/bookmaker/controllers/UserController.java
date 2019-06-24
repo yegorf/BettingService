@@ -7,7 +7,6 @@ import com.yegorf.bookmaker.validators.RegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 @RestController
@@ -20,9 +19,14 @@ public class UserController {
     public HashSet<User> getUser() {
         HashSet<User> users = userRepo.findAll();
         for(User user : users) {
-            System.out.println(user.getId() + user.getEmail());
+            System.out.println("DD " + user.getId() + " " + user.getName());
         }
         return users;
+    }
+
+    @PostMapping("/getUser")
+    public User getUser(@RequestParam String name) {
+        return userRepo.findByName(name);
     }
 
     @PostMapping("/addUser")
@@ -41,13 +45,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username,
+    public Object login(@RequestParam String username,
                       @RequestParam String password) {
+        User user;
         try {
-            new LoginValidator(userRepo).validate(username, password);
+            user = new LoginValidator(userRepo).validate(username, password);
         } catch (Exception e) {
-            return e.getMessage();
+            System.out.println("ex");
+            return e;
         }
-        return "Login completed!";
+        return user;
     }
+
 }
