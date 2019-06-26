@@ -26,6 +26,11 @@ public class EventResult {
     @JoinColumn(name = "event_id")
     private Event event;
 
+    public EventResult(String result, Event event) {
+        this.result = result;
+        this.event = event;
+    }
+
     @OneToMany(mappedBy = "eventResult", cascade = CascadeType.ALL)
     private Set<Bet> bets;
 

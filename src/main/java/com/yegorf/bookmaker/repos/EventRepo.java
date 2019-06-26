@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface EventRepo extends CrudRepository<Event, Integer> {
     HashSet<Event> findAll();
     HashSet<Event> findAllBySport(Sport sport);
+    Event findById(int id);
    // Event findById(Integer id);
 }

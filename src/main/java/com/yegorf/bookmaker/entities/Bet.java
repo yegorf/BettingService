@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Data
 @Entity
@@ -27,4 +29,11 @@ public class Bet {
 
     private Float sum;
     private Float coef;
+
+    public Bet(User user, EventResult eventResult, Float sum, Float coef) {
+        this.user = user;
+        this.eventResult = eventResult;
+        this.sum = sum;
+        this.coef = coef;
+    }
 }

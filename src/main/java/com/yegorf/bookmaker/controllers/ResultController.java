@@ -34,6 +34,7 @@ public class ResultController {
             }
         }
 
+        assert results != null;
         for(ResultsSumCoef result : results) {
             System.out.println("res " + result.getId() + " " + result.getSum() + " " + result.getName());
         }
