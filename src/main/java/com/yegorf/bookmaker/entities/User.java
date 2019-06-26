@@ -11,7 +11,7 @@ import java.util.Set;
 @EqualsAndHashCode(of="id")
 @Entity
 @NoArgsConstructor
-@JsonIgnoreProperties("bets")
+@JsonIgnoreProperties({"bets", "transactions"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +25,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Bet> bets;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Transaction> transactions;
 
     public User(String name, String password, String email) {
         this.name = name;

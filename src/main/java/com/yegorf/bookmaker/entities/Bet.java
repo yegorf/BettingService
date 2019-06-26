@@ -1,11 +1,17 @@
 package com.yegorf.bookmaker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@EqualsAndHashCode(of="id")
+@NoArgsConstructor
+@JsonIgnoreProperties({"eventResult", "user"})
 public class Bet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

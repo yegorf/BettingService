@@ -33,7 +33,6 @@ public class EventController {
             JsonEvent jsonEvent = new JsonEvent();
             jsonEvent.setSport(e.getSport().getSport());
             for(Part p : e.getParts()) {
-                System.out.println("p " + p.getTeam().getName());
                 if(jsonEvent.getTeam1() == null) {
                     jsonEvent.setTeam1(p.getTeam().getName());
                 } else {
@@ -41,6 +40,7 @@ public class EventController {
                 }
             }
             jsonEvent.setDate(e.getDate());
+            jsonEvent.setId(e.getId());
             jsonEvents.add(jsonEvent);
         }
 

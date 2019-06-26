@@ -11,6 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString(exclude = "events")
 @JsonIgnoreProperties("events")
+@EqualsAndHashCode(of="id")
 public class Sport {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

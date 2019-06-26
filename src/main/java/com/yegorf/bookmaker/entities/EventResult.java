@@ -2,6 +2,7 @@ package com.yegorf.bookmaker.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -11,8 +12,9 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode(of="id")
 @ToString(exclude = "bets")
-@JsonIgnoreProperties("bets")
+@JsonIgnoreProperties({"bets", "event"})
 public class EventResult {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

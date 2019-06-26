@@ -35,15 +35,8 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-
-	//compileOnly 'org.projectlombok:lombok:1.18.4'
+	
 	annotationProcessor 'org.projectlombok:lombok:1.18.4'
-
-	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	compile 'mysql:mysql-connector-java'
-// https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
-//	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '4.1.7.Final'
-
-
-
+	compile group: 'javax.mail', name: 'mail', version: '1.4.1'
 }

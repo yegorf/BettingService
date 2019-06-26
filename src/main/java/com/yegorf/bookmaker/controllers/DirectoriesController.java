@@ -24,6 +24,9 @@ public class DirectoriesController {
 
     @GetMapping("/getTeams")
     public HashSet<Team> getTeams() {
+        for(Team team : teamRepo.findAll()) {
+            System.out.println("t " + team.getName());
+        }
         return teamRepo.findAll();
     }
 
@@ -36,6 +39,11 @@ public class DirectoriesController {
         }
         teamRepo.save(new Team(team, info));
         return "Added!";
+    }
+
+    @PostMapping("/removeTeam")
+    public void removeTeam(@RequestParam int team) {
+        teamRepo.deleteById(team);
     }
 
     @GetMapping("/getSports")
@@ -53,5 +61,11 @@ public class DirectoriesController {
         }
         sportRepo.save(new Sport(sport));
         return "Added!";
+    }
+
+    @PostMapping("/removeSport")
+    public void removeSport(@RequestParam int sport) {
+        System.out.println("id " + sport);
+        sportRepo.deleteById(sport);
     }
 }

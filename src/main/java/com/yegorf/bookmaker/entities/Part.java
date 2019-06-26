@@ -1,16 +1,15 @@
 package com.yegorf.bookmaker.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode(of="id")
 public class Part {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
