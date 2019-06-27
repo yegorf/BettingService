@@ -12,13 +12,16 @@ import java.util.HashSet;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+
+    public UserController(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @GetMapping("/getUsers")
     public HashSet<User> getUser() {
         HashSet<User> users = userRepo.findAll();
-        for(User user : users) {
+        for (User user : users) {
             System.out.println("DD " + user.getId() + " " + user.getName());
         }
         return users;
@@ -31,8 +34,8 @@ public class UserController {
 
     @PostMapping("/addUser")
     public String addUser(@RequestParam String username,
-                        @RequestParam String password,
-                        @RequestParam String email) {
+                          @RequestParam String password,
+                          @RequestParam String email) {
         User user = new User(username, password, email);
         try {
             new RegistrationValidator(userRepo).dataUniqCheck(user);
@@ -46,7 +49,7 @@ public class UserController {
 
     @PostMapping("/login")
     public Object login(@RequestParam String username,
-                      @RequestParam String password) {
+                        @RequestParam String password) {
         User user;
         try {
             user = new LoginValidator(userRepo).validate(username, password);

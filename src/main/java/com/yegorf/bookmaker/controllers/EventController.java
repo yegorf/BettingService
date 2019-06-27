@@ -1,36 +1,37 @@
 package com.yegorf.bookmaker.controllers;
 
-import com.yegorf.bookmaker.entities.*;
 import com.yegorf.bookmaker.dto.JsonEvent;
+import com.yegorf.bookmaker.entities.*;
 import com.yegorf.bookmaker.repos.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/events")
 public class EventController {
-    @Autowired
-    EventRepo eventRepo;
-    @Autowired
-    SportRepo sportRepo;
-    @Autowired
-    TeamRepo teamRepo;
-    @Autowired
-    PartRepo partRepo;
-    @Autowired
-    EventResultRepo eventResultRepo;
+    private final EventRepo eventRepo;
+    private final SportRepo sportRepo;
+    private final TeamRepo teamRepo;
+    private final PartRepo partRepo;
+    private final EventResultRepo eventResultRepo;
+
+    public EventController(EventRepo eventRepo, SportRepo sportRepo, TeamRepo teamRepo, PartRepo partRepo, EventResultRepo eventResultRepo) {
+        this.eventRepo = eventRepo;
+        this.sportRepo = sportRepo;
+        this.teamRepo = teamRepo;
+        this.partRepo = partRepo;
+        this.eventResultRepo = eventResultRepo;
+    }
 
     @GetMapping("/getEvents")
     public ArrayList<JsonEvent> getEvents() {
         ArrayList<JsonEvent> jsonEvents = new ArrayList<>();
-        for(Event e : eventRepo.findAll()) {
+        for (Event e : eventRepo.findAll()) {
             JsonEvent jsonEvent = new JsonEvent();
             jsonEvent.setSport(e.getSport().getSport());
-            for(Part p : e.getParts()) {
-                if(jsonEvent.getTeam1() == null) {
+            for (Part p : e.getParts()) {
+                if (jsonEvent.getTeam1() == null) {
                     jsonEvent.setTeam1(p.getTeam().getName());
                 } else {
                     jsonEvent.setTeam2(p.getTeam().getName());
@@ -45,22 +46,22 @@ public class EventController {
 
     @PostMapping("/addEvent")
     public void addEvent(@RequestParam Integer sport,
-                           @RequestParam Integer team1,
-                           @RequestParam Integer team2,
-                            @RequestParam String date
-                         ) {
+                         @RequestParam Integer team1,
+                         @RequestParam Integer team2,
+                         @RequestParam String date
+    ) {
 
         Event event = new Event();
-        for(Sport s : sportRepo.findAll()) {
-            if(s.getId().equals(sport)) {
+        for (Sport s : sportRepo.findAll()) {
+            if (s.getId().equals(sport)) {
                 event.setSport(s);
                 event.setDate(date);
                 eventRepo.save(event);
                 break;
             }
         }
-        for(Team team : teamRepo.findAll()) {
-            if(team.getId().equals(team1) || team.getId().equals(team2)) {
+        for (Team team : teamRepo.findAll()) {
+            if (team.getId().equals(team1) || team.getId().equals(team2)) {
                 partRepo.save(new Part(event, team));
             }
         }
@@ -73,11 +74,11 @@ public class EventController {
     @PostMapping("/getEvent")
     public JsonEvent getEvent(@RequestParam int id) {
         ArrayList<JsonEvent> jsonEvents = new ArrayList<>();
-        for(Event e : eventRepo.findAll()) {
+        for (Event e : eventRepo.findAll()) {
             JsonEvent jsonEvent = new JsonEvent();
             jsonEvent.setSport(e.getSport().getSport());
-            for(Part p : e.getParts()) {
-                if(jsonEvent.getTeam1() == null) {
+            for (Part p : e.getParts()) {
+                if (jsonEvent.getTeam1() == null) {
                     jsonEvent.setTeam1(p.getTeam().getName());
                 } else {
                     jsonEvent.setTeam2(p.getTeam().getName());

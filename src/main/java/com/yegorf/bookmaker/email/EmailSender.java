@@ -22,7 +22,7 @@ public class EmailSender {
         props.put("mail.smtp.port", "587");
     }
 
-    public void send(String subject, String text, String toEmail){
+    public void send(String subject, String text, String toEmail) {
         Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);

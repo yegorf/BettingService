@@ -15,10 +15,13 @@ import java.util.HashSet;
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
-    @Autowired
-    private TransactionRepo transactionRepo;
-    @Autowired
-    private UserRepo userRepo;
+    private final TransactionRepo transactionRepo;
+    private final UserRepo userRepo;
+
+    public TransactionController(TransactionRepo transactionRepo, UserRepo userRepo) {
+        this.transactionRepo = transactionRepo;
+        this.userRepo = userRepo;
+    }
 
     @PostMapping("/getByUser")
     private HashSet<Transaction> getByUser(@RequestParam String user) {

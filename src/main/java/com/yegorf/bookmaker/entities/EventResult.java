@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of = "id")
 @ToString(exclude = "bets")
 @JsonIgnoreProperties({"bets", "event"})
 public class EventResult {

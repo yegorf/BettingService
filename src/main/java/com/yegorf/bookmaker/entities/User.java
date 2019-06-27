@@ -1,14 +1,15 @@
 package com.yegorf.bookmaker.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of = "id")
 @Entity
 @NoArgsConstructor
 @JsonIgnoreProperties({"bets", "transactions"})

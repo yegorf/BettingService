@@ -11,5 +11,6 @@ import java.util.HashSet;
 @Repository
 public interface BetRepo extends CrudRepository<Bet, Integer> {
     HashSet<Bet> findAllByUser(User user);
+
     HashSet<Bet> findAllByEventResult(EventResult eventResult);
 }

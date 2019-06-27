@@ -17,17 +17,17 @@ public class DirectoriesValidator {
     }
 
     public void checkSportUniq(String sport) throws Exception {
-        for(Sport s : sportRepo.findAll()) {
-            if(sport.equals(s.getSport())) {
+        for (Sport s : sportRepo.findAll()) {
+            if (sport.equals(s.getSport())) {
                 throw new Exception("This sport already exists!");
             }
         }
     }
 
     public void checkTeamUniq(String team) throws Exception {
-        for(Team t : teamRepo.findAll()) {
-            if(team.equals(t.getName())) {
-                throw  new Exception("This team already exists!");
+        for (Team t : teamRepo.findAll()) {
+            if (team.equals(t.getName())) {
+                throw new Exception("This team already exists!");
             }
         }
     }

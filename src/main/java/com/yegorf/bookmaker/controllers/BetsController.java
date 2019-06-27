@@ -8,23 +8,25 @@ import com.yegorf.bookmaker.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.HashSet;
 
 @RestController
 @RequestMapping("/bets")
 public class BetsController {
-    @Autowired
-    private UserRepo userRepo;
-    @Autowired
-    private BetRepo betRepo;
-    @Autowired
-    private EventResultRepo eventResultRepo;
+    private final UserRepo userRepo;
+    private final BetRepo betRepo;
+    private final EventResultRepo eventResultRepo;
+
+    public BetsController(UserRepo userRepo, BetRepo betRepo, EventResultRepo eventResultRepo) {
+        this.userRepo = userRepo;
+        this.betRepo = betRepo;
+        this.eventResultRepo = eventResultRepo;
+    }
 
     @GetMapping("/getBets")
     public void getBets() {
-        for(User user : userRepo.findAll()) {
-            for(Bet bet : betRepo.findAllByUser(user)) {
+        for (User user : userRepo.findAll()) {
+            for (Bet bet : betRepo.findAllByUser(user)) {
                 System.out.println(bet.getSum());
             }
         }
@@ -37,8 +39,8 @@ public class BetsController {
 
     @PostMapping("/addBet")
     public String addBet(@RequestParam String username,
-                       @RequestParam float sum,
-                       @RequestParam int eventResult
+                         @RequestParam float sum,
+                         @RequestParam int eventResult
     ) {
         User user = userRepo.findByName(username);
 

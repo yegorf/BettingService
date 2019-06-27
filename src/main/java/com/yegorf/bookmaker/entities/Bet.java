@@ -6,12 +6,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Data
 @Entity
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @JsonIgnoreProperties({"eventResult", "user"})
 public class Bet {

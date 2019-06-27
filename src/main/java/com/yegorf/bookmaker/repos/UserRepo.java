@@ -10,5 +10,6 @@ import java.util.HashSet;
 @Repository
 public interface UserRepo extends CrudRepository<User, Integer> {
     HashSet<User> findAll();
+
     User findByName(String name);
 }

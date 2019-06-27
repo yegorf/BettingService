@@ -21,22 +21,18 @@ public class ResultCalculator {
         this.eventResultRepo = eventResultRepo;
     }
 
-
     public HashSet<ResultsSumCoef> setSums(Event event) {
-        for(EventResult result : eventResultRepo.findAllByEvent(event)){
+        for (EventResult result : eventResultRepo.findAllByEvent(event)) {
             ResultsSumCoef resultsSumCoef = new ResultsSumCoef();
             resultsSumCoef.setId(result.getId());
             resultsSumCoef.setName(result.getResult());
             float sum = 0.0f;
-            for(Bet bet : betRepo.findAllByEventResult(result)) {
-                sum+=bet.getSum();
+            for (Bet bet : betRepo.findAllByEventResult(result)) {
+                sum += bet.getSum();
             }
             resultsSumCoef.setSum(sum);
             results.add(resultsSumCoef);
         }
-
         return results;
     }
-
-
 }

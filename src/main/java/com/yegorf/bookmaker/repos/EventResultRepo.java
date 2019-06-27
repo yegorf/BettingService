@@ -10,6 +10,8 @@ import java.util.HashSet;
 @Repository
 public interface EventResultRepo extends CrudRepository<EventResult, Integer> {
     HashSet<EventResult> findAll();
+
     HashSet<EventResult> findAllByEvent(Event event);
+
     EventResult findById(int id);
 }

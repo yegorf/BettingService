@@ -1,6 +1,5 @@
 package com.yegorf.bookmaker.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of = "id")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

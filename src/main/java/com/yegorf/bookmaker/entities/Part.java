@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of = "id")
 public class Part {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
