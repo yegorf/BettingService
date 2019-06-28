@@ -14,4 +14,6 @@ public interface EventRepo extends CrudRepository<Event, Integer> {
     HashSet<Event> findAllBySport(Sport sport);
 
     Event findById(int id);
+
+    HashSet<Event> findAllByActiveAndDateBefore(int active, String date);
 }

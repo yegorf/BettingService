@@ -3,6 +3,7 @@ package com.yegorf.bookmaker.controllers;
 import com.yegorf.bookmaker.dto.JsonEvent;
 import com.yegorf.bookmaker.entities.*;
 import com.yegorf.bookmaker.repos.*;
+import com.yegorf.bookmaker.rusults_analis.ResultsAnalisator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class EventController {
 
     @GetMapping("/getEvents")
     public ArrayList<JsonEvent> getEvents() {
+        ResultsAnalisator analisator = new ResultsAnalisator(eventRepo);
+        analisator.checkEventEnding();
+
         ArrayList<JsonEvent> jsonEvents = new ArrayList<>();
         for (Event e : eventRepo.findAll()) {
             JsonEvent jsonEvent = new JsonEvent();
@@ -45,13 +49,16 @@ public class EventController {
     }
 
     @PostMapping("/addEvent")
-    public void addEvent(@RequestParam Integer sport,
-                         @RequestParam Integer team1,
-                         @RequestParam Integer team2,
-                         @RequestParam String date
+    public void addEvent(@RequestParam int sport,
+                         @RequestParam int team1,
+                         @RequestParam int team2,
+                         @RequestParam String date,
+                         @RequestParam int profit
     ) {
 
         Event event = new Event();
+        event.setProfit(profit);
+        event.setActive(1);
         for (Sport s : sportRepo.findAll()) {
             if (s.getId().equals(sport)) {
                 event.setSport(s);

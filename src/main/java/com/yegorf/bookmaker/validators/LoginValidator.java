@@ -1,6 +1,7 @@
 package com.yegorf.bookmaker.validators;
 
 import com.yegorf.bookmaker.entities.User;
+import com.yegorf.bookmaker.exceptions.NotExistException;
 import com.yegorf.bookmaker.repos.UserRepo;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +14,13 @@ public class LoginValidator {
         this.userRepo = userRepo;
     }
 
-    public User validate(String username, String password) throws Exception {
+    public User validate(String username, String password) throws NotExistException {
         checkUsername(username);
-        checkPassword(password);
+        checkPassword(username, password);
         return user;
     }
 
-    private void checkUsername(String username) throws Exception {
+    private void checkUsername(String username) throws NotExistException {
         boolean usernameCheck = false;
 
         for (User user : userRepo.findAll()) {
@@ -30,22 +31,22 @@ public class LoginValidator {
             }
         }
         if (!usernameCheck) {
-            throw new Exception("Wrong username!");
+            throw new NotExistException("Wrong username!");
         }
     }
 
-    private void checkPassword(String password) throws Exception {
+    private void checkPassword(String username, String password) throws NotExistException {
         boolean passwordCheck = false;
 
         for (User user : userRepo.findAll()) {
-            if (password.equals(user.getPassword())) {
+            if (username.equals(user.getName()) && password.equals(user.getPassword())) {
                 passwordCheck = true;
                 this.user = user;
                 break;
             }
         }
         if (!passwordCheck) {
-            throw new Exception("Wrong password!");
+            throw new NotExistException("Wrong password!");
         }
     }
 }

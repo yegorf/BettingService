@@ -1,6 +1,7 @@
 package com.yegorf.bookmaker.validators;
 
 import com.yegorf.bookmaker.entities.User;
+import com.yegorf.bookmaker.exceptions.AlreadyExistException;
 import com.yegorf.bookmaker.repos.UserRepo;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,14 @@ public class RegistrationValidator {
         this.userRepo = userRepo;
     }
 
-    public void dataUniqCheck(User user) throws Exception {
+    public void dataUniqCheck(User user) throws AlreadyExistException {
         HashSet<User> users = userRepo.findAll();
         for (User u : users) {
             if (user.getName().equals(u.getName())) {
-                throw new Exception("User with this username already exists!");
+                throw new AlreadyExistException("User with this username already exists!");
             }
             if (user.getEmail().equals(u.getEmail())) {
-                throw new Exception("User with this email already exists!");
+                throw new AlreadyExistException("User with this email already exists!");
             }
         }
     }

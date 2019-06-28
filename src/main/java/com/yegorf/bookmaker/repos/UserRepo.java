@@ -12,4 +12,8 @@ public interface UserRepo extends CrudRepository<User, Integer> {
     HashSet<User> findAll();
 
     User findByName(String name);
+
+    User findById(int id);
+
+    HashSet<User> findAllByAdmin(int admin);
 }

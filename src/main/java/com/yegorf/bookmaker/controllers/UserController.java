@@ -1,10 +1,12 @@
 package com.yegorf.bookmaker.controllers;
 
+import com.yegorf.bookmaker.entities.Role;
 import com.yegorf.bookmaker.entities.User;
+import com.yegorf.bookmaker.exceptions.AlreadyExistException;
+import com.yegorf.bookmaker.exceptions.NotExistException;
 import com.yegorf.bookmaker.repos.UserRepo;
 import com.yegorf.bookmaker.validators.LoginValidator;
 import com.yegorf.bookmaker.validators.RegistrationValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -20,11 +22,7 @@ public class UserController {
 
     @GetMapping("/getUsers")
     public HashSet<User> getUser() {
-        HashSet<User> users = userRepo.findAll();
-        for (User user : users) {
-            System.out.println("DD " + user.getId() + " " + user.getName());
-        }
-        return users;
+        return userRepo.findAll();
     }
 
     @PostMapping("/getUser")
@@ -35,29 +33,37 @@ public class UserController {
     @PostMapping("/addUser")
     public String addUser(@RequestParam String username,
                           @RequestParam String password,
-                          @RequestParam String email) {
+                          @RequestParam String email) throws AlreadyExistException {
         User user = new User(username, password, email);
-        try {
-            new RegistrationValidator(userRepo).dataUniqCheck(user);
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return e.getMessage();
-        }
+        new RegistrationValidator(userRepo).dataUniqCheck(user);
         userRepo.save(user);
         return "Registration completed!";
     }
 
     @PostMapping("/login")
     public Object login(@RequestParam String username,
-                        @RequestParam String password) {
+                        @RequestParam String password) throws NotExistException {
         User user;
-        try {
-            user = new LoginValidator(userRepo).validate(username, password);
-        } catch (Exception e) {
-            System.out.println("ex");
-            return e;
-        }
+        user = new LoginValidator(userRepo).validate(username, password);
         return user;
     }
 
+    @GetMapping("/getAdmins")
+    public HashSet<User> getAdmins() {
+        return userRepo.findAllByAdmin(Role.ADMIN.getCode());
+    }
+
+    @PostMapping("/makeAdmin")
+    public void makeAdmin(@RequestParam int id) {
+        User user = userRepo.findById(id);
+        user.setAdmin(1);
+        userRepo.save(user);
+    }
+
+    @PostMapping("/removeAdmin")
+    public void removeAdmin(@RequestParam int id) {
+        User user = userRepo.findById(id);
+        user.setAdmin(0);
+        userRepo.save(user);
+    }
 }
