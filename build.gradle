@@ -39,4 +39,6 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.4'
 	compile 'mysql:mysql-connector-java'
 	compile group: 'javax.mail', name: 'mail', version: '1.4.1'
+	
+	compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
 }

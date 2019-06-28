@@ -2,6 +2,7 @@ package com.yegorf.bookmaker.controllers;
 
 import com.yegorf.bookmaker.entities.Sport;
 import com.yegorf.bookmaker.entities.Team;
+import com.yegorf.bookmaker.exceptions.AlreadyExistException;
 import com.yegorf.bookmaker.repos.SportRepo;
 import com.yegorf.bookmaker.repos.TeamRepo;
 import com.yegorf.bookmaker.validators.DirectoriesValidator;
@@ -21,7 +22,6 @@ public class DirectoriesController {
         this.teamRepo = teamRepo;
     }
 
-
     @GetMapping("/getTeams")
     public HashSet<Team> getTeams() {
         for (Team team : teamRepo.findAll()) {
@@ -31,12 +31,8 @@ public class DirectoriesController {
     }
 
     @PostMapping("/addTeam")
-    public String addTeam(@RequestParam String team, @RequestParam String info) {
-        try {
-            new DirectoriesValidator(sportRepo, teamRepo).checkTeamUniq(team);
-        } catch (Exception e) {
-            return e.getMessage();
-        }
+    public String addTeam(@RequestParam String team, @RequestParam String info) throws AlreadyExistException {
+        new DirectoriesValidator(sportRepo, teamRepo).checkTeamUniq(team);
         teamRepo.save(new Team(team, info));
         return "Added!";
     }
@@ -52,13 +48,8 @@ public class DirectoriesController {
     }
 
     @PostMapping("/addSport")
-    public String addSport(@RequestParam String sport) {
-        try {
-            new DirectoriesValidator(sportRepo, teamRepo).checkSportUniq(sport);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return e.getMessage();
-        }
+    public String addSport(@RequestParam String sport) throws AlreadyExistException {
+        new DirectoriesValidator(sportRepo, teamRepo).checkSportUniq(sport);
         sportRepo.save(new Sport(sport));
         return "Added!";
     }
