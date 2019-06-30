@@ -5,6 +5,7 @@ import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.repos.BetRepo;
 import com.yegorf.bookmaker.repos.EventResultRepo;
 import com.yegorf.bookmaker.repos.UserRepo;
+import com.yegorf.bookmaker.rusults_analis.WinningsPayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

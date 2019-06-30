@@ -5,8 +5,9 @@ import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.exceptions.AlreadyExistException;
 import com.yegorf.bookmaker.exceptions.NotExistException;
 import com.yegorf.bookmaker.repos.UserRepo;
-import com.yegorf.bookmaker.validators.LoginValidator;
-import com.yegorf.bookmaker.validators.RegistrationValidator;
+import com.yegorf.bookmaker.unique_validators.LoginValidator;
+import com.yegorf.bookmaker.unique_validators.RegistrationValidator;
+import com.yegorf.bookmaker.validators.EmailValidator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -33,7 +34,9 @@ public class UserController {
     @PostMapping("/addUser")
     public String addUser(@RequestParam String username,
                           @RequestParam String password,
-                          @RequestParam String email) throws AlreadyExistException {
+                          @RequestParam String email) throws Exception {
+        EmailValidator.check(email);
+
         User user = new User(username, password, email);
         new RegistrationValidator(userRepo).dataUniqCheck(user);
         userRepo.save(user);

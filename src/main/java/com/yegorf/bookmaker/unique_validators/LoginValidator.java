@@ -1,4 +1,4 @@
-package com.yegorf.bookmaker.validators;
+package com.yegorf.bookmaker.unique_validators;
 
 import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.exceptions.NotExistException;

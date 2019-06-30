@@ -6,7 +6,6 @@ import com.yegorf.bookmaker.entities.Event;
 import com.yegorf.bookmaker.repos.BetRepo;
 import com.yegorf.bookmaker.repos.EventRepo;
 import com.yegorf.bookmaker.repos.EventResultRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,5 +45,4 @@ public class ResultController {
 
         return results;
     }
-
 }

@@ -5,8 +5,7 @@ import com.yegorf.bookmaker.entities.Team;
 import com.yegorf.bookmaker.exceptions.AlreadyExistException;
 import com.yegorf.bookmaker.repos.SportRepo;
 import com.yegorf.bookmaker.repos.TeamRepo;
-import com.yegorf.bookmaker.validators.DirectoriesValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.yegorf.bookmaker.unique_validators.DirectoriesValidator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;

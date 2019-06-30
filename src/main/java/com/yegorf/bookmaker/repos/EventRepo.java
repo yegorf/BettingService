@@ -15,5 +15,5 @@ public interface EventRepo extends CrudRepository<Event, Integer> {
 
     Event findById(int id);
 
-    HashSet<Event> findAllByActiveAndDateBefore(int active, String date);
+    HashSet<Event> findAllByActive(int active);
 }

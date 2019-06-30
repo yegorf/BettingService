@@ -3,10 +3,13 @@ package com.yegorf.bookmaker.controllers;
 import com.yegorf.bookmaker.dto.JsonEvent;
 import com.yegorf.bookmaker.entities.*;
 import com.yegorf.bookmaker.repos.*;
-import com.yegorf.bookmaker.rusults_analis.ResultsAnalisator;
+import com.yegorf.bookmaker.rusults_analis.EventsTimeAnalyzer;
+import com.yegorf.bookmaker.rusults_analis.WinningsPayer;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @RestController
 @RequestMapping("/events")
@@ -27,25 +30,7 @@ public class EventController {
 
     @GetMapping("/getEvents")
     public ArrayList<JsonEvent> getEvents() {
-        ResultsAnalisator analisator = new ResultsAnalisator(eventRepo);
-        analisator.checkEventEnding();
-
-        ArrayList<JsonEvent> jsonEvents = new ArrayList<>();
-        for (Event e : eventRepo.findAll()) {
-            JsonEvent jsonEvent = new JsonEvent();
-            jsonEvent.setSport(e.getSport().getSport());
-            for (Part p : e.getParts()) {
-                if (jsonEvent.getTeam1() == null) {
-                    jsonEvent.setTeam1(p.getTeam().getName());
-                } else {
-                    jsonEvent.setTeam2(p.getTeam().getName());
-                }
-            }
-            jsonEvent.setDate(e.getDate());
-            jsonEvent.setId(e.getId());
-            jsonEvents.add(jsonEvent);
-        }
-        return jsonEvents;
+        return convertEvents(eventRepo.findAll());
     }
 
     @PostMapping("/addEvent")
@@ -80,8 +65,31 @@ public class EventController {
     //TEST EXAMPLE
     @PostMapping("/getEvent")
     public JsonEvent getEvent(@RequestParam int id) {
+        ArrayList<JsonEvent> jsonEvents = convertEvents(eventRepo.findAll());
+        for (JsonEvent event : jsonEvents) {
+            if (event.getId() == id) {
+                return event;
+            }
+        }
+        return null;
+    }
+
+    @GetMapping("/getPastEvents")
+    public ArrayList<JsonEvent> getPastEvents() {
+        EventsTimeAnalyzer analyzer = new EventsTimeAnalyzer(eventRepo);
+        ArrayList<JsonEvent> events = null;
+        try {
+            events = convertEvents(analyzer.checkEventEnding());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return events;
+    }
+
+    //TEST EXAMPLE
+    private ArrayList<JsonEvent> convertEvents(HashSet<Event> events) {
         ArrayList<JsonEvent> jsonEvents = new ArrayList<>();
-        for (Event e : eventRepo.findAll()) {
+        for (Event e : events) {
             JsonEvent jsonEvent = new JsonEvent();
             jsonEvent.setSport(e.getSport().getSport());
             for (Part p : e.getParts()) {
@@ -93,13 +101,9 @@ public class EventController {
             }
             jsonEvent.setDate(e.getDate());
             jsonEvent.setId(e.getId());
+            jsonEvent.setActive(e.getActive());
             jsonEvents.add(jsonEvent);
         }
-        for (JsonEvent event : jsonEvents) {
-            if (event.getId() == id) {
-                return event;
-            }
-        }
-        return null;
+        return jsonEvents;
     }
 }
