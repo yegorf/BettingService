@@ -1,6 +1,7 @@
 package com.yegorf.bookmaker.rusults_analis;
 
 import com.yegorf.bookmaker.entities.Event;
+import com.yegorf.bookmaker.enums.EventStatus;
 import com.yegorf.bookmaker.repos.EventRepo;
 
 import java.text.ParseException;
@@ -19,7 +20,7 @@ public class EventsTimeAnalyzer {
 
     public HashSet<Event> checkEventEnding() throws ParseException {
         HashSet<Event> events = new HashSet<>();
-        for (Event event : eventRepo.findAllByActive(1)) {
+        for (Event event : eventRepo.findAllByActive(EventStatus.ACTIVE.name())) {
             String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 

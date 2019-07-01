@@ -3,6 +3,7 @@ package com.yegorf.bookmaker.rusults_analis;
 import com.yegorf.bookmaker.entities.Bet;
 import com.yegorf.bookmaker.entities.EventResult;
 import com.yegorf.bookmaker.entities.User;
+import com.yegorf.bookmaker.enums.BetStatus;
 import com.yegorf.bookmaker.repos.BetRepo;
 import com.yegorf.bookmaker.repos.UserRepo;
 
@@ -23,7 +24,7 @@ public class WinningsPayer {
             User user = bet.getUser();
             user.setBalance(user.getBalance() + (bet.getSum() * bet.getCoef()));
             userRepo.save(user);
-            bet.setStatus("won");
+            bet.setStatus(BetStatus.WON.name());
         }
     }
 }

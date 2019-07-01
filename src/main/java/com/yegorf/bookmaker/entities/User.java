@@ -21,7 +21,7 @@ public class User {
     private String name;
     private String password;
     private String email;
-    private Integer admin = 0;
+    private String admin;
     private Float balance;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

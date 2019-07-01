@@ -29,7 +29,7 @@ public class Event {
     private Sport sport;
 
     private String date;
-    private int active = 1;
+    private String active;
     private int profit;
 
     public Event(Sport sport, String date) {

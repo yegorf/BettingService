@@ -4,6 +4,7 @@ import com.yegorf.bookmaker.coefs.ResultCalculator;
 import com.yegorf.bookmaker.dto.ResultsSumCoef;
 import com.yegorf.bookmaker.entities.Event;
 import com.yegorf.bookmaker.entities.EventResult;
+import com.yegorf.bookmaker.enums.EventStatus;
 import com.yegorf.bookmaker.repos.BetRepo;
 import com.yegorf.bookmaker.repos.EventRepo;
 import com.yegorf.bookmaker.repos.EventResultRepo;
@@ -44,10 +45,6 @@ public class ResultController {
         }
 
         assert results != null;
-        for (ResultsSumCoef result : results) {
-            System.out.println("res " + result.getId() + " " + result.getSum() + " " + result.getName());
-        }
-
         return results;
     }
 
@@ -55,7 +52,7 @@ public class ResultController {
     public void setEventResult(@RequestParam int eventId,
                                @RequestParam int resultId) {
         Event event = eventRepo.findById(eventId);
-        event.setActive(0);
+        event.setActive(EventStatus.FINISHED.name());
         eventRepo.save(event);
 
         EventResult wonResult = null;

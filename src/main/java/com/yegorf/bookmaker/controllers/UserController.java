@@ -1,8 +1,7 @@
 package com.yegorf.bookmaker.controllers;
 
-import com.yegorf.bookmaker.entities.Role;
 import com.yegorf.bookmaker.entities.User;
-import com.yegorf.bookmaker.exceptions.AlreadyExistException;
+import com.yegorf.bookmaker.enums.UserRole;
 import com.yegorf.bookmaker.exceptions.NotExistException;
 import com.yegorf.bookmaker.repos.UserRepo;
 import com.yegorf.bookmaker.unique_validators.LoginValidator;
@@ -38,7 +37,9 @@ public class UserController {
         EmailValidator.check(email);
 
         User user = new User(username, password, email);
+        user.setBalance(0.0f);
         new RegistrationValidator(userRepo).dataUniqCheck(user);
+        user.setAdmin(UserRole.USER.name());
         userRepo.save(user);
         return "Registration completed!";
     }
@@ -46,6 +47,7 @@ public class UserController {
     @PostMapping("/login")
     public Object login(@RequestParam String username,
                         @RequestParam String password) throws NotExistException {
+        System.out.println(username + " " + password);
         User user;
         user = new LoginValidator(userRepo).validate(username, password);
         return user;
@@ -53,20 +55,20 @@ public class UserController {
 
     @GetMapping("/getAdmins")
     public HashSet<User> getAdmins() {
-        return userRepo.findAllByAdmin(Role.ADMIN.getCode());
+        return userRepo.findAllByAdmin(UserRole.ADMIN.name());
     }
 
     @PostMapping("/makeAdmin")
     public void makeAdmin(@RequestParam int id) {
         User user = userRepo.findById(id);
-        user.setAdmin(1);
+        user.setAdmin(UserRole.ADMIN.name());
         userRepo.save(user);
     }
 
     @PostMapping("/removeAdmin")
     public void removeAdmin(@RequestParam int id) {
         User user = userRepo.findById(id);
-        user.setAdmin(0);
+        user.setAdmin(UserRole.USER.name());
         userRepo.save(user);
     }
 }

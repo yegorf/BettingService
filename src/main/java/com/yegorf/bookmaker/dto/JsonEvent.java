@@ -9,5 +9,5 @@ public class JsonEvent {
     private String team1;
     private String team2;
     private String date;
-    private int active;
+    private String active;
 }

@@ -2,6 +2,7 @@ package com.yegorf.bookmaker.controllers;
 
 import com.yegorf.bookmaker.dto.JsonEvent;
 import com.yegorf.bookmaker.entities.*;
+import com.yegorf.bookmaker.enums.EventStatus;
 import com.yegorf.bookmaker.repos.*;
 import com.yegorf.bookmaker.rusults_analis.EventsTimeAnalyzer;
 import com.yegorf.bookmaker.rusults_analis.WinningsPayer;
@@ -43,7 +44,7 @@ public class EventController {
 
         Event event = new Event();
         event.setProfit(profit);
-        event.setActive(1);
+        event.setActive(EventStatus.ACTIVE.name());
         for (Sport s : sportRepo.findAll()) {
             if (s.getId().equals(sport)) {
                 event.setSport(s);
