@@ -27,6 +27,7 @@ public class Bet {
 
     private Float sum;
     private Float coef;
+    private String status = "active";
 
     public Bet(User user, EventResult eventResult, Float sum, Float coef) {
         this.user = user;

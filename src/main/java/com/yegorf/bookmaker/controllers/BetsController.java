@@ -1,6 +1,7 @@
 package com.yegorf.bookmaker.controllers;
 
 import com.yegorf.bookmaker.entities.Bet;
+import com.yegorf.bookmaker.entities.EventResult;
 import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.repos.BetRepo;
 import com.yegorf.bookmaker.repos.EventResultRepo;
@@ -35,6 +36,7 @@ public class BetsController {
 
     @PostMapping("/getUserBets")
     public HashSet<Bet> getUserBets(@RequestParam String name) {
+       // pay();
         return betRepo.findAllByUser(userRepo.findByName(name));
     }
 
@@ -52,8 +54,7 @@ public class BetsController {
         bet.setUser(user);
         bet.setSum(sum);
         bet.setEventResult(eventResultRepo.findById(eventResult));
-        bet.setCoef(0.5f);
-
+        bet.setCoef(1.5f);
 
         betRepo.save(bet);
         return "Bet added!";

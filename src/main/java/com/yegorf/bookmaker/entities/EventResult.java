@@ -21,6 +21,7 @@ public class EventResult {
     private Integer id;
 
     private String result;
+    private int won;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "event_id")
