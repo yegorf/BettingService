@@ -7,6 +7,9 @@ import com.yegorf.bookmaker.repos.UserRepo;
 import com.yegorf.bookmaker.unique_validators.LoginValidator;
 import com.yegorf.bookmaker.unique_validators.RegistrationValidator;
 import com.yegorf.bookmaker.validators.EmailValidator;
+import com.yegorf.bookmaker.validators.PasswordValidator;
+import com.yegorf.bookmaker.validators.UsernameValidator;
+import com.yegorf.bookmaker.validators.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -15,6 +18,7 @@ import java.util.HashSet;
 @RequestMapping("/users")
 public class UserController {
     private final UserRepo userRepo;
+    private Validator validator = new Validator();
 
     public UserController(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -34,7 +38,12 @@ public class UserController {
     public String addUser(@RequestParam String username,
                           @RequestParam String password,
                           @RequestParam String email) throws Exception {
-        EmailValidator.check(email);
+        validator.setValidationStrategy(new UsernameValidator());
+        validator.validate(username);
+        validator.setValidationStrategy(new PasswordValidator());
+        validator.validate(password);
+        validator.setValidationStrategy(new EmailValidator());
+        validator.validate(email);
 
         User user = new User(username, password, email);
         user.setBalance(0.0f);

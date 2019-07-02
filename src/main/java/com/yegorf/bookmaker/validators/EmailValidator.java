@@ -3,8 +3,9 @@ package com.yegorf.bookmaker.validators;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EmailValidator {
-    public static void check(String text) throws Exception {
+public class EmailValidator implements ValidationStrategy {
+    @Override
+    public void check(String text) throws Exception {
         String regExpn =
                 "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
                         + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"

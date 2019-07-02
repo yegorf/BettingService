@@ -1,4 +1,4 @@
-package com.yegorf.bookmaker.exceptions;
+package com.yegorf.bookmaker.enums;
 
 public enum ErrorCode {
     ANSWER_NOT_FOUND,

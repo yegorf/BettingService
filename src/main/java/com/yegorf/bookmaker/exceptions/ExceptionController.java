@@ -1,6 +1,7 @@
 package com.yegorf.bookmaker.exceptions;
 
 import com.yegorf.bookmaker.dto.ErrorInfo;
+import com.yegorf.bookmaker.enums.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
