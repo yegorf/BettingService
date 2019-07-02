@@ -39,7 +39,7 @@ public class ResultController {
 
         for (Event event : eventRepo.findAll()) {
             if (event.getId().equals(id)) {
-                results = calculator.setSums(event);
+                results = calculator.setSumCoef(event);
                 break;
             }
         }

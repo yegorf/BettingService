@@ -21,18 +21,36 @@ public class ResultCalculator {
         this.eventResultRepo = eventResultRepo;
     }
 
-    public HashSet<ResultsSumCoef> setSums(Event event) {
-        for (EventResult result : eventResultRepo.findAllByEvent(event)) {
+    public HashSet<ResultsSumCoef> setSumCoef(Event event) {
+        HashSet<EventResult> eventResults = eventResultRepo.findAllByEvent(event);
+        float totalSum = setSums(eventResults);
+        setPercents(totalSum);
+        return results;
+    }
+
+    private float setSums(HashSet<EventResult> eventResults) {
+        float totalSum = 0.0f;
+        for (EventResult result : eventResults) {
             ResultsSumCoef resultsSumCoef = new ResultsSumCoef();
+
             resultsSumCoef.setId(result.getId());
             resultsSumCoef.setName(result.getResult());
+
             float sum = 0.0f;
             for (Bet bet : betRepo.findAllByEventResult(result)) {
                 sum += bet.getSum();
             }
+
             resultsSumCoef.setSum(sum);
             results.add(resultsSumCoef);
+            totalSum += sum;
         }
-        return results;
+        return totalSum;
+    }
+
+    private void setPercents(float totalSum) {
+        for(ResultsSumCoef result : results) {
+            result.setPercent((result.getSum() / totalSum) * 100);
+        }
     }
 }

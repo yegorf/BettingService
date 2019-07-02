@@ -4,11 +4,10 @@ import com.yegorf.bookmaker.entities.Bet;
 import com.yegorf.bookmaker.entities.EventResult;
 import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.enums.BetStatus;
+import com.yegorf.bookmaker.enums.EventStatus;
 import com.yegorf.bookmaker.repos.BetRepo;
 import com.yegorf.bookmaker.repos.EventResultRepo;
 import com.yegorf.bookmaker.repos.UserRepo;
-import com.yegorf.bookmaker.rusults_analis.WinningsPayer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -46,18 +45,23 @@ public class BetsController {
                          @RequestParam int eventResult
     ) {
         User user = userRepo.findByName(username);
+        EventResult result = eventResultRepo.findById(eventResult);
 
-        user.setBalance(user.getBalance() - sum);
-        userRepo.save(user);
+        if(result.getEvent().getActive().equals(EventStatus.ACTIVE.name())) {
+            user.setBalance(user.getBalance() - sum);
+            userRepo.save(user);
 
-        Bet bet = new Bet();
-        bet.setUser(user);
-        bet.setSum(sum);
-        bet.setEventResult(eventResultRepo.findById(eventResult));
-        bet.setCoef(1.5f);
-        bet.setStatus(BetStatus.ACTIVE.name());
+            Bet bet = new Bet();
+            bet.setUser(user);
+            bet.setSum(sum);
+            bet.setEventResult(result);
+            bet.setCoef(1.5f);
+            bet.setStatus(BetStatus.ACTIVE.name());
 
-        betRepo.save(bet);
-        return "Bet added!";
+            betRepo.save(bet);
+            return "Bet added!";
+        } else {
+            return "Event finished!";
+        }
     }
 }
