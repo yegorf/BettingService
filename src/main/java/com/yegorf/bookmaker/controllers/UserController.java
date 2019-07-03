@@ -1,5 +1,7 @@
 package com.yegorf.bookmaker.controllers;
 
+import com.yegorf.bookmaker.email.EmailProperties;
+import com.yegorf.bookmaker.email.EmailSender;
 import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.enums.UserRole;
 import com.yegorf.bookmaker.exceptions.NotExistException;
@@ -12,10 +14,8 @@ import com.yegorf.bookmaker.validators.UsernameValidator;
 import com.yegorf.bookmaker.validators.Validator;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.Comparator;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
-import java.util.TreeSet;
 
 @RestController
 @RequestMapping("/users")
@@ -79,5 +79,12 @@ public class UserController {
         User user = userRepo.findById(id);
         user.setAdmin(UserRole.USER.name());
         userRepo.save(user);
+    }
+
+    @PostMapping("/remindPassword")
+    public void remindPassword(@RequestParam int userId) {
+        User user = userRepo.findById(userId);
+        EmailSender emailSender = new EmailSender(EmailProperties.EMAIL, EmailProperties.PASSWORD);
+        emailSender.send("Password remind", "Your password: " + user.getPassword(), user.getEmail());
     }
 }
