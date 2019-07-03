@@ -34,5 +34,4 @@ public class EventResult {
 
     @OneToMany(mappedBy = "eventResult", cascade = CascadeType.ALL)
     private Set<Bet> bets;
-
 }

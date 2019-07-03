@@ -3,7 +3,7 @@ package com.yegorf.bookmaker.dto;
 import lombok.Data;
 
 @Data
-public class ResultsSumCoef {
+public class ResponseResult {
     private int id;
     private String name;
     private float sum;

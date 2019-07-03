@@ -1,7 +1,7 @@
 package com.yegorf.bookmaker.controllers;
 
 import com.yegorf.bookmaker.coefs.ResultCalculator;
-import com.yegorf.bookmaker.dto.ResultsSumCoef;
+import com.yegorf.bookmaker.dto.ResponseResult;
 import com.yegorf.bookmaker.entities.Event;
 import com.yegorf.bookmaker.entities.EventResult;
 import com.yegorf.bookmaker.enums.EventStatus;
@@ -33,9 +33,9 @@ public class ResultController {
     }
 
     @PostMapping("/getEventResults")
-    public HashSet<ResultsSumCoef> getEventResults(@RequestParam Integer id) {
+    public HashSet<ResponseResult> getEventResults(@RequestParam Integer id) {
         ResultCalculator calculator = new ResultCalculator(betRepo, eventResultRepo);
-        HashSet<ResultsSumCoef> results = null;
+        HashSet<ResponseResult> results = null;
 
         for (Event event : eventRepo.findAll()) {
             if (event.getId().equals(id)) {

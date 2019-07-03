@@ -12,7 +12,7 @@ import java.util.Set;
 @ToString(exclude = "events")
 @JsonIgnoreProperties("events")
 @EqualsAndHashCode(of = "id")
-public class Sport {
+public class Sport implements Comparable<Sport> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -24,5 +24,10 @@ public class Sport {
 
     public Sport(String sport) {
         this.sport = sport;
+    }
+
+    @Override
+    public int compareTo(Sport s) {
+        return String.CASE_INSENSITIVE_ORDER.compare(this.getSport(), s.getSport());
     }
 }

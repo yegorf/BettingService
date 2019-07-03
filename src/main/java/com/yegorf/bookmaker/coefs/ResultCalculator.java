@@ -1,6 +1,6 @@
 package com.yegorf.bookmaker.coefs;
 
-import com.yegorf.bookmaker.dto.ResultsSumCoef;
+import com.yegorf.bookmaker.dto.ResponseResult;
 import com.yegorf.bookmaker.entities.Bet;
 import com.yegorf.bookmaker.entities.Event;
 import com.yegorf.bookmaker.entities.EventResult;
@@ -14,14 +14,14 @@ import java.util.HashSet;
 public class ResultCalculator {
     private final BetRepo betRepo;
     private final EventResultRepo eventResultRepo;
-    private HashSet<ResultsSumCoef> results = new HashSet<ResultsSumCoef>();
+    private HashSet<ResponseResult> results = new HashSet<ResponseResult>();
 
     public ResultCalculator(BetRepo betRepo, EventResultRepo eventResultRepo) {
         this.betRepo = betRepo;
         this.eventResultRepo = eventResultRepo;
     }
 
-    public HashSet<ResultsSumCoef> setSumCoef(Event event) {
+    public HashSet<ResponseResult> setSumCoef(Event event) {
         HashSet<EventResult> eventResults = eventResultRepo.findAllByEvent(event);
         float totalSum = setSums(eventResults);
         setPercents(totalSum);
@@ -31,7 +31,7 @@ public class ResultCalculator {
     private float setSums(HashSet<EventResult> eventResults) {
         float totalSum = 0.0f;
         for (EventResult result : eventResults) {
-            ResultsSumCoef resultsSumCoef = new ResultsSumCoef();
+            ResponseResult resultsSumCoef = new ResponseResult();
 
             resultsSumCoef.setId(result.getId());
             resultsSumCoef.setName(result.getResult());
@@ -49,7 +49,7 @@ public class ResultCalculator {
     }
 
     private void setPercents(float totalSum) {
-        for(ResultsSumCoef result : results) {
+        for(ResponseResult result : results) {
             result.setPercent((result.getSum() / totalSum) * 100);
         }
     }

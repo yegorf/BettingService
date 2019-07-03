@@ -16,7 +16,7 @@ public class EmailValidator implements ValidationStrategy {
 
         Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(text);
-        if(!matcher.matches()) {
+        if (!matcher.matches()) {
             throw new Exception("Invalid email!");
         }
     }

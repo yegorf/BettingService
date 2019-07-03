@@ -1,16 +1,16 @@
 package com.yegorf.bookmaker.controllers;
 
-import com.yegorf.bookmaker.dto.JsonEvent;
+import com.yegorf.bookmaker.dto.ResponseEvent;
 import com.yegorf.bookmaker.entities.*;
 import com.yegorf.bookmaker.enums.EventStatus;
 import com.yegorf.bookmaker.repos.*;
 import com.yegorf.bookmaker.rusults_analis.EventsTimeAnalyzer;
-import com.yegorf.bookmaker.rusults_analis.WinningsPayer;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 @RestController
 @RequestMapping("/events")
@@ -30,7 +30,7 @@ public class EventController {
     }
 
     @GetMapping("/getEvents")
-    public ArrayList<JsonEvent> getEvents() {
+    public TreeSet<ResponseEvent> getEvents() {
         return convertEvents(eventRepo.findAll());
     }
 
@@ -58,16 +58,15 @@ public class EventController {
                 partRepo.save(new Part(event, team));
             }
         }
-
         eventResultRepo.save(new EventResult("1 team win", event));
         eventResultRepo.save(new EventResult("2 team win", event));
     }
 
     //TEST EXAMPLE
     @PostMapping("/getEvent")
-    public JsonEvent getEvent(@RequestParam int id) {
-        ArrayList<JsonEvent> jsonEvents = convertEvents(eventRepo.findAll());
-        for (JsonEvent event : jsonEvents) {
+    public ResponseEvent getEvent(@RequestParam int id) {
+        TreeSet<ResponseEvent> jsonEvents = convertEvents(eventRepo.findAll());
+        for (ResponseEvent event : jsonEvents) {
             if (event.getId() == id) {
                 return event;
             }
@@ -76,9 +75,9 @@ public class EventController {
     }
 
     @GetMapping("/getPastEvents")
-    public ArrayList<JsonEvent> getPastEvents() {
+    public TreeSet<ResponseEvent> getPastEvents() {
         EventsTimeAnalyzer analyzer = new EventsTimeAnalyzer(eventRepo);
-        ArrayList<JsonEvent> events = null;
+        TreeSet<ResponseEvent> events = null;
         try {
             events = convertEvents(analyzer.checkEventEnding());
         } catch (ParseException e) {
@@ -88,10 +87,10 @@ public class EventController {
     }
 
     //TEST EXAMPLE
-    private ArrayList<JsonEvent> convertEvents(HashSet<Event> events) {
-        ArrayList<JsonEvent> jsonEvents = new ArrayList<>();
+    private TreeSet<ResponseEvent> convertEvents(HashSet<Event> events) {
+        TreeSet<ResponseEvent> jsonEvents = new TreeSet<>();
         for (Event e : events) {
-            JsonEvent jsonEvent = new JsonEvent();
+            ResponseEvent jsonEvent = new ResponseEvent();
             jsonEvent.setSport(e.getSport().getSport());
             for (Part p : e.getParts()) {
                 if (jsonEvent.getTeam1() == null) {

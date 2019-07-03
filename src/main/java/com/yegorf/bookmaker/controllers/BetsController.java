@@ -47,7 +47,7 @@ public class BetsController {
         User user = userRepo.findByName(username);
         EventResult result = eventResultRepo.findById(eventResult);
 
-        if(result.getEvent().getActive().equals(EventStatus.ACTIVE.name())) {
+        if (result.getEvent().getActive().equals(EventStatus.ACTIVE.name())) {
             user.setBalance(user.getBalance() - sum);
             userRepo.save(user);
 

@@ -4,7 +4,6 @@ import com.yegorf.bookmaker.entities.Transaction;
 import com.yegorf.bookmaker.repos.TransactionRepo;
 import com.yegorf.bookmaker.repos.UserRepo;
 import com.yegorf.bookmaker.transactions.TransactionHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

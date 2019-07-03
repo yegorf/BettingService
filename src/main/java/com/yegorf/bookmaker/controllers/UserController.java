@@ -12,7 +12,10 @@ import com.yegorf.bookmaker.validators.UsernameValidator;
 import com.yegorf.bookmaker.validators.Validator;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 @RestController
 @RequestMapping("/users")
@@ -56,10 +59,7 @@ public class UserController {
     @PostMapping("/login")
     public Object login(@RequestParam String username,
                         @RequestParam String password) throws NotExistException {
-        System.out.println(username + " " + password);
-        User user;
-        user = new LoginValidator(userRepo).validate(username, password);
-        return user;
+        return new LoginValidator(userRepo).validate(username, password);
     }
 
     @GetMapping("/getAdmins")

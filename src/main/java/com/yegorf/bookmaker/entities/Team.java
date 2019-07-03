@@ -13,7 +13,7 @@ import java.util.Set;
 @EqualsAndHashCode(of = "id")
 @ToString(exclude = "parts")
 @JsonIgnoreProperties("parts")
-public class Team {
+public class Team implements Comparable<Team> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -28,4 +28,9 @@ public class Team {
 
     private String name;
     private String info;
+
+    @Override
+    public int compareTo(Team t) {
+        return String.CASE_INSENSITIVE_ORDER.compare(this.getName(), t.getName());
+    }
 }

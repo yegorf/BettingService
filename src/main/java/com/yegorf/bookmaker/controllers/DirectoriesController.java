@@ -8,7 +8,7 @@ import com.yegorf.bookmaker.repos.TeamRepo;
 import com.yegorf.bookmaker.unique_validators.DirectoriesValidator;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
+import java.util.TreeSet;
 
 @RestController
 @RequestMapping("directories")
@@ -22,10 +22,7 @@ public class DirectoriesController {
     }
 
     @GetMapping("/getTeams")
-    public HashSet<Team> getTeams() {
-        for (Team team : teamRepo.findAll()) {
-            System.out.println("t " + team.getName());
-        }
+    public TreeSet<Team> getTeams() {
         return teamRepo.findAll();
     }
 
@@ -42,7 +39,7 @@ public class DirectoriesController {
     }
 
     @GetMapping("/getSports")
-    public HashSet<Sport> getSports() {
+    public TreeSet<Sport> getSports() {
         return sportRepo.findAll();
     }
 
@@ -55,7 +52,6 @@ public class DirectoriesController {
 
     @PostMapping("/removeSport")
     public void removeSport(@RequestParam int sport) {
-        System.out.println("id " + sport);
         sportRepo.deleteById(sport);
     }
 }

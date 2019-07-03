@@ -5,8 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
+import java.util.TreeSet;
 
 @Repository
 public interface TeamRepo extends CrudRepository<Team, Integer> {
-    HashSet<Team> findAll();
+    TreeSet<Team> findAll();
 }
