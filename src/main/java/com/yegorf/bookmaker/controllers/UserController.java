@@ -2,6 +2,7 @@ package com.yegorf.bookmaker.controllers;
 
 import com.yegorf.bookmaker.email.EmailProperties;
 import com.yegorf.bookmaker.email.EmailSender;
+import com.yegorf.bookmaker.encoding.SHA256Encoder;
 import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.enums.UserRole;
 import com.yegorf.bookmaker.exceptions.NotExistException;
@@ -14,7 +15,7 @@ import com.yegorf.bookmaker.validators.UsernameValidator;
 import com.yegorf.bookmaker.validators.Validator;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Email;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 
 @RestController
@@ -22,6 +23,7 @@ import java.util.HashSet;
 public class UserController {
     private final UserRepo userRepo;
     private Validator validator = new Validator();
+    private SHA256Encoder encoder = new SHA256Encoder();
 
     public UserController(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -48,7 +50,7 @@ public class UserController {
         validator.setValidationStrategy(new EmailValidator());
         validator.validate(email);
 
-        User user = new User(username, password, email);
+        User user = new User(username, encoder.encode(password), email);
         user.setBalance(0.0f);
         new RegistrationValidator(userRepo).dataUniqCheck(user);
         user.setAdmin(UserRole.USER.name());
@@ -58,8 +60,8 @@ public class UserController {
 
     @PostMapping("/login")
     public Object login(@RequestParam String username,
-                        @RequestParam String password) throws NotExistException {
-        return new LoginValidator(userRepo).validate(username, password);
+                        @RequestParam String password) throws NotExistException, NoSuchAlgorithmException {
+        return new LoginValidator(userRepo).validate(username, password, encoder);
     }
 
     @GetMapping("/getAdmins")

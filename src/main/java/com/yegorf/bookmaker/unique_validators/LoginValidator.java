@@ -1,9 +1,12 @@
 package com.yegorf.bookmaker.unique_validators;
 
+import com.yegorf.bookmaker.encoding.SHA256Encoder;
 import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.exceptions.NotExistException;
 import com.yegorf.bookmaker.repos.UserRepo;
 import org.springframework.stereotype.Service;
+
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class LoginValidator {
@@ -14,9 +17,9 @@ public class LoginValidator {
         this.userRepo = userRepo;
     }
 
-    public User validate(String username, String password) throws NotExistException {
+    public User validate(String username, String password, SHA256Encoder encoder) throws NotExistException, NoSuchAlgorithmException {
         checkUsername(username);
-        checkPassword(username, password);
+        checkPassword(username, password, encoder);
         return user;
     }
 
@@ -35,11 +38,11 @@ public class LoginValidator {
         }
     }
 
-    private void checkPassword(String username, String password) throws NotExistException {
+    private void checkPassword(String username, String password, SHA256Encoder encoder) throws NotExistException, NoSuchAlgorithmException {
         boolean passwordCheck = false;
 
         for (User user : userRepo.findAll()) {
-            if (username.equals(user.getName()) && password.equals(user.getPassword())) {
+            if (username.equals(user.getName()) && encoder.encode(password).equals(user.getPassword())) {
                 passwordCheck = true;
                 this.user = user;
                 break;
