@@ -1,6 +1,6 @@
 package com.yegorf.bookmaker.unique_validators;
 
-import com.yegorf.bookmaker.encoding.SHA256Encoder;
+import com.yegorf.bookmaker.encoding.HashEncoder;
 import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.exceptions.NotExistException;
 import com.yegorf.bookmaker.repos.UserRepo;
@@ -17,7 +17,7 @@ public class LoginValidator {
         this.userRepo = userRepo;
     }
 
-    public User validate(String username, String password, SHA256Encoder encoder) throws NotExistException, NoSuchAlgorithmException {
+    public User validate(String username, String password, HashEncoder encoder) throws NotExistException, NoSuchAlgorithmException {
         checkUsername(username);
         checkPassword(username, password, encoder);
         return user;
@@ -38,7 +38,7 @@ public class LoginValidator {
         }
     }
 
-    private void checkPassword(String username, String password, SHA256Encoder encoder) throws NotExistException, NoSuchAlgorithmException {
+    private void checkPassword(String username, String password, HashEncoder encoder) throws NotExistException, NoSuchAlgorithmException {
         boolean passwordCheck = false;
 
         for (User user : userRepo.findAll()) {

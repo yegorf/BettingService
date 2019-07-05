@@ -2,6 +2,7 @@ package com.yegorf.bookmaker.controllers;
 
 import com.yegorf.bookmaker.email.EmailProperties;
 import com.yegorf.bookmaker.email.EmailSender;
+import com.yegorf.bookmaker.encoding.HashEncoder;
 import com.yegorf.bookmaker.encoding.SHA256Encoder;
 import com.yegorf.bookmaker.entities.User;
 import com.yegorf.bookmaker.enums.UserRole;
@@ -23,7 +24,7 @@ import java.util.HashSet;
 public class UserController {
     private final UserRepo userRepo;
     private Validator validator = new Validator();
-    private SHA256Encoder encoder = new SHA256Encoder();
+    private HashEncoder encoder = new SHA256Encoder();
 
     public UserController(UserRepo userRepo) {
         this.userRepo = userRepo;
