@@ -30,6 +30,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Transaction> transactions;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Block> blocks;
+
     public User(String name, String password, String email) {
         this.name = name;
         this.password = password;
