@@ -20,4 +20,11 @@ public class Block {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Block(User user, String date, int term, String reason) {
+        this.term = term;
+        this.date = date;
+        this.reason = reason;
+        this.user = user;
+    }
 }

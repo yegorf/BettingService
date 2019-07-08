@@ -50,13 +50,13 @@ public class ResultCalculator {
     }
 
     private void setPercents(float totalSum) {
-        for(ResponseResult result : results) {
+        for (ResponseResult result : results) {
             result.setPercent((result.getSum() / totalSum) * 100);
         }
     }
 
     private void setCoefs() {
-        for(ResponseResult result : results) {
+        for (ResponseResult result : results) {
             result.setCoef(100 / result.getPercent());
         }
     }
